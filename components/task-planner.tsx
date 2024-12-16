@@ -7,10 +7,33 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
+interface Task {
+  id: number;
+  description: string;
+  duration: string;
+  isCompleted: boolean;
+  isDeferred: boolean;
+  isMandatory: boolean;
+  type: string;
+  monday: string;
+  tuesday: string;
+  wednesday: string;
+  thursday: string;
+  friday: string;
+  category: string;
+  [key: string]: string | number | boolean;
+}
+
+interface UserInfo {
+  name: string;
+  email: string;
+  managerEmail: string;
+}
+
 // Main Planner Component
 const TaskPlanner = () => {
   // Initialize 40 yellow and 40 green tasks
-  const initialTasks = [
+  const initialTasks: Task[] = [
     ...Array.from({ length: 40 }, (_, i) => ({
       id: i,
       description: '',
@@ -43,14 +66,14 @@ const TaskPlanner = () => {
     })),
   ];
 
-  const [tasks, setTasks] = useState(initialTasks);
-  const [userInfo, setUserInfo] = useState({
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [userInfo, setUserInfo] = useState<UserInfo>({
     name: '',
     email: '',
     managerEmail: '',
   });
 
-  const handleTaskChange = (index: number, field: string, value: any) => {
+  const handleTaskChange = (index: number, field: keyof Task, value: string | boolean) => {
     const updatedTasks = [...tasks];
     updatedTasks[index][field] = value;
     setTasks(updatedTasks);
@@ -89,6 +112,8 @@ const TaskPlanner = () => {
       return total + dailySum;
     }, 0);
   };
+
+  const weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] as const;
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 space-y-6">
@@ -168,22 +193,22 @@ const TaskPlanner = () => {
                     <td className="p-2 border text-center">
                       <Checkbox
                         checked={task.isCompleted}
-                        onCheckedChange={(checked) => handleTaskChange(index, 'isCompleted', checked)}
+                        onCheckedChange={(checked) => handleTaskChange(index, 'isCompleted', !!checked)}
                       />
                     </td>
                     <td className="p-2 border text-center">
                       <Checkbox
                         checked={task.isDeferred}
-                        onCheckedChange={(checked) => handleTaskChange(index, 'isDeferred', checked)}
+                        onCheckedChange={(checked) => handleTaskChange(index, 'isDeferred', !!checked)}
                       />
                     </td>
                     <td className="p-2 border text-center">
                       <Checkbox
                         checked={task.isMandatory}
-                        onCheckedChange={(checked) => handleTaskChange(index, 'isMandatory', checked)}
+                        onCheckedChange={(checked) => handleTaskChange(index, 'isMandatory', !!checked)}
                       />
                     </td>
-                    {['monday', 'tuesday', 'wednesday', 'thursday', 'friday'].map((day) => (
+                    {weekDays.map((day) => (
                       <td key={day} className="p-2 border">
                         <Input
                           type="number"
