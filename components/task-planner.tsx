@@ -246,7 +246,10 @@ Date.prototype.getWeek = function() {
   const dayNum = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - dayNum);
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  // Convert dates to timestamps before arithmetic
+  const timestamp = d.getTime();
+  const yearStartTimestamp = yearStart.getTime();
+  return Math.ceil((((timestamp - yearStartTimestamp) / 86400000) + 1) / 7);
 };
 
 export default TaskPlanner;
