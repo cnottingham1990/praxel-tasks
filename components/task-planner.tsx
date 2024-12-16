@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 const TaskPlanner = () => {
   // Initialize 40 yellow and 40 green tasks
   const initialTasks = [
-    ...Array(40).fill().map((_, i) => ({
+    ...Array.from({ length: 40 }, (_, i) => ({
       id: i,
       description: '',
       duration: '',
@@ -26,7 +26,7 @@ const TaskPlanner = () => {
       friday: '',
       category: 'yellow',
     })),
-    ...Array(40).fill().map((_, i) => ({
+    ...Array.from({ length: 40 }, (_, i) => ({
       id: i + 40,
       description: '',
       duration: '',
@@ -85,7 +85,7 @@ const TaskPlanner = () => {
   const calculateTotalHours = () => {
     return tasks.reduce((total, task) => {
       const dailySum = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
-        .reduce((sum, day) => sum + (parseFloat(task[day]) || 0), 0);
+        .reduce((sum, day) => sum + (parseFloat(task[day] as string) || 0), 0);
       return total + dailySum;
     }, 0);
   };
