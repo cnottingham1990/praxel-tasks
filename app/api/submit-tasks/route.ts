@@ -1,59 +1,34 @@
-import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { Resend } from "resend";
+import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY as string);
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { userInfo, tasks, weekNumber, totalHours } = await req.json();
+    // Parse the incoming request body
+    const { name, managerEmail } = await req.json();
 
-    const emailHtml = `
-      <h1>Weekly Task Plan Submission</h1>
-      <p><strong>From:</strong> ${userInfo.name} (${userInfo.email})</p>
-      <p><strong>Week Number:</strong> ${weekNumber}</p>
-      <p><strong>Total Hours:</strong> ${totalHours}</p>
-      
-      <h2>Tasks Summary</h2>
-      <table border="1" cellpadding="5">
-        <tr>
-          <th>Description</th>
-          <th>Duration</th>
-          <th>Status</th>
-          <th>Mon</th>
-          <th>Tue</th>
-          <th>Wed</th>
-          <th>Thu</th>
-          <th>Fri</th>
-        </tr>
-        ${tasks
-          .filter((task: any) => task.description)
-          .map((task: any) => `
-            <tr>
-              <td>${task.description}</td>
-              <td>${task.duration}</td>
-              <td>${task.isCompleted ? 'Completed' : task.isDeferred ? 'Deferred' : 'Pending'}</td>
-              <td>${task.monday || '-'}</td>
-              <td>${task.tuesday || '-'}</td>
-              <td>${task.wednesday || '-'}</td>
-              <td>${task.thursday || '-'}</td>
-              <td>${task.friday || '-'}</td>
-            </tr>
-          `).join('')}
-      </table>
-    `;
+    // Ensure the required fields are provided
+    if (!name || !managerEmail) {
+      return NextResponse.json(
+        { success: false, message: "Missing required fields." },
+        { status: 400 }
+      );
+    }
 
-    await resend.emails.send({
-      from: 'tasks@yourdomain.com', // Update this with your verified domain in Resend
-      to: userInfo.managerEmail,
-      subject: `Task Plan Submission - Week ${weekNumber}`,
-      html: emailHtml,
+    // Send the email via Resend
+    const emailResponse = await resend.emails.send({
+      from: "Your Name <youremail@example.com>", // Replace with your sender email
+      to: managerEmail,
+      subject: "Task Submission Notification",
+      html: `<p>${name} has submitted their tasks for review.</p>`,
     });
 
-    return NextResponse.json({ message: 'Email sent successfully' });
+    return NextResponse.json({ success: true, message: emailResponse });
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error("Error sending email:", error);
     return NextResponse.json(
-      { message: 'Error sending email' },
+      { success: false, message: "Failed to send email." },
       { status: 500 }
     );
   }
