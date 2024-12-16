@@ -1,7 +1,8 @@
 'use client'
 
 import React from "react"
-import { cn } from "@/lib/utils"
+// Replace the `@/...` import with a relative path
+import { cn } from "../../lib/utils"
 
 const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, ...props }, ref) => {
