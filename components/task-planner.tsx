@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+import { Card, CardHeader, CardContent } from '../components/ui/card';
+import { Input } from '../components/ui/input';
+import { Button } from '../components/ui/button';
+import { Checkbox } from '../components/ui/checkbox';
+import { Label } from '../components/ui/label';
 
 interface Task {
   id: number;
@@ -93,7 +93,7 @@ const TaskPlanner = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formattedData),
       });
-      
+
       if (response.ok) {
         alert('Tasks submitted successfully!');
       } else {
@@ -246,10 +246,7 @@ Date.prototype.getWeek = function() {
   const dayNum = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - dayNum);
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  // Convert dates to timestamps before arithmetic
-  const timestamp = d.getTime();
-  const yearStartTimestamp = yearStart.getTime();
-  return Math.ceil((((timestamp - yearStartTimestamp) / 86400000) + 1) / 7);
+  return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
 };
 
 export default TaskPlanner;
