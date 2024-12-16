@@ -3,7 +3,7 @@
 import React from "react"
 import { cn } from "@/lib/utils"
 
-const Button = React.forwardRef<HTMLButtonElement, React.ButtonElement<HTMLButtonElement>>(
+const Button = React.forwardRef<HTMLButtonElement, HTMLButtonElement<HTMLButtonElement>>(
   ({ className, ...props }, ref) => {
     return (
       <button
