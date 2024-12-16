@@ -13,12 +13,14 @@
     "@radix-ui/react-checkbox": "^1.0.0",
     "@radix-ui/react-label": "^1.0.0",
     "lucide-react": "^0.264.0",
-    "next": "^14.0.3",
+    "clsx": "^1.2.1",
+    "tailwind-merge": "^1.14.0",
+    "next": "^14.2.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "eslint": "8.57.1",
-    "eslint-config-next": "14.0.3"
+    "eslint-config-next": "14.2.20"
   }
 }
