@@ -1,9 +1,9 @@
 'use client'
 
 import React from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils" // Ensure this import path is correct
 
-const Button = React.forwardRef<HTMLButtonElement, HTMLButtonElement<HTMLButtonElement>>(
+const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
   ({ className, ...props }, ref) => {
     return (
       <button
