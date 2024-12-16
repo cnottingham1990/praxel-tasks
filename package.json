@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.7.0", // SendGrid package
-    "@radix-ui/react-checkbox": "^1.0.0", // Example of Radix UI package
+    "@sendgrid/mail": "^7.7.0",
+    "@radix-ui/react-checkbox": "^1.0.0",
     "@radix-ui/react-label": "^1.0.0",
     "lucide-react": "^0.264.0",
-    "next": "^14.0.3", // Your Next.js version
-    "react": "^18.2.0", // Your React version
+    "next": "^14.0.3",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
